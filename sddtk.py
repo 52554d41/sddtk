@@ -34,9 +34,15 @@ pwd3 = tk.Label(text="Leave empty for anonymous login.")
 def handle_dl(event):
     index = osselent.current()
     if(index == 0):
-        subprocess.run(["dotnet", "DepotDownloader.dll", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get(), "-username", usnentry.get()])
+        if(usnvar == ""):
+            subprocess.run(["dotnet", "DepotDownloader.dll", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get()]) # anonymous login
+        else:
+            subprocess.run(["dotnet", "DepotDownloader.dll", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get(), "-username", usnentry.get()])
     elif(index == 1):
-        subprocess.run(["./depotdownloader", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get(), "-username", usnentry.get()])
+        if(usnvar == ""):
+            subprocess.run(["./depotdownloader", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get()]) # anonymous login
+        else:
+            subprocess.run(["./depotdownloader", "-app", appident.get(), "-depot", depident.get(), "-manifest", manident.get(), "-username", usnentry.get()])
     else:
         messagebox.showerror("Error", "Please select OS!")
     dlbutton.configure(state=DISABLED)
